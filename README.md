@@ -10,6 +10,8 @@ For the menu page, the owners would like to store the menu information in a data
 
 <hr>
 
+![Screenshot](screenshot.png)
+
 - ## Command to perform migrations
 `python3 manage.py makemigrations`
 
