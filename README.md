@@ -1,3 +1,3 @@
-#React Front-End for Little Lemon
+# React Front-End for Little Lemon
 
 ![Screenshot](screenshot.png)
