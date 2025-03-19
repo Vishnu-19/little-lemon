@@ -1,21 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        NODE_VERSION = '18'  // Set Node.js version
+    tools {
+        nodejs 'node18' // Use the Node.js installation from Jenkins settings
     }
 
     stages {
-
-        stage('Set Up Node.js') {
-            steps {
-                script {
-                    // Use Node.js version from environment variable
-                    def node_version = NODE_VERSION
-                    sh "nvm install ${node_version} && nvm use ${node_version}"
-                }
-            }
-        }
 
         stage('Install Dependencies') {
             steps {
