@@ -1,21 +1,53 @@
 pipeline {
     agent any
 
+    environment {
+        NODE_VERSION = '18'  // Set Node.js version
+    }
+
     stages {
-        stage("build") {
+
+        stage('Set Up Node.js') {
             steps {
-                echo 'building jenkinsfile...'
+                script {
+                    // Use Node.js version from environment variable
+                    def node_version = NODE_VERSION
+                    sh "nvm install ${node_version} && nvm use ${node_version}"
+                }
             }
         }
-        stage("test") {
+
+        stage('Install Dependencies') {
             steps {
-                echo 'testing jenkinsfile...'
+                sh 'npm install'
             }
         }
-        stage("depoly") {
+
+        stage('Run Tests') {
             steps {
-                echo 'depolying jenkinsfile...'
+                sh 'npm test -- --watchAll=false'
             }
+        }
+
+        stage('Build React App') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage('Archive Build Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'build/**', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'React app build successful!'
+        }
+        failure {
+            echo 'Build failed!'
         }
     }
 }
